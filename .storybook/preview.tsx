@@ -1,11 +1,14 @@
 import { Preview } from "@storybook/react";
 import { Theme } from "../src/Theme";
+import { ScreenOverlay } from "../src/components/ScreenOverlay";
 
 const preview: Preview = {
     decorators: [
         (Story) => (
             <Theme>
-                <Story />
+                <ScreenOverlay style={{padding: 10}}>
+                    <Story />
+                </ScreenOverlay>
             </Theme>
         )
     ],

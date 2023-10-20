@@ -51,12 +51,12 @@ export const ProgressBar = (props: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: theme.thickness * 2
+        gap: theme.scale * 2
     }}>
         <Text style={{ textTransform: "uppercase" }} colorVariant={props.colorVariant}>{props.title}</Text>
         <Box style={{
             width: 35,
-            height: 175,
+            height: theme.scale * 60,
             padding: 0
         }} colorVariant={props.colorVariant}>
             <Animated.View style={{
@@ -71,6 +71,6 @@ export const ProgressBar = (props: {
                 backgroundColor: color
             }} />
         </Box>
-        {props.displayValue && <Text style={{ textTransform: "uppercase", fontSize: theme.thickness * 8 }} colorVariant={props.colorVariant}>{props.displayValue}</Text>}
+        {props.displayValue && <Text style={{ textTransform: "uppercase", fontSize: theme.scale * 8 }} colorVariant={props.colorVariant}>{props.displayValue}</Text>}
     </View>;
 };

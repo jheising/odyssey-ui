@@ -15,7 +15,7 @@ export const Button = (props: {
 
     return <TouchableOpacity disabled={props.disabled}>
         <Chip colorVariant={props.colorVariant} outlined={props.outlined} disabled={props.disabled}>
-            {props.title && <Text style={{ color: props.outlined ? color : theme.backgroundColor, fontSize: theme.thickness * 8 }}>{props.title}</Text>}
+            {props.title && <Text style={{ color: props.outlined ? color : theme.backgroundColor, fontSize: theme.scale * 8 }}>{props.title}</Text>}
         </Chip>
     </TouchableOpacity>;
 };

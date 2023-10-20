@@ -10,7 +10,7 @@ export const Chip = (props: PropsWithChildren<{
 }>) => {
     const theme = useContext(ThemeContext);
     const color = theme[`${props.colorVariant ?? "primary"}Color`];
-    const notchSize = theme.thickness * 8;
+    const notchSize = theme.scale * 8;
     const drawOutlined = props.outlined || props.disabled;
 
     function renderBottomBar() {
@@ -26,7 +26,7 @@ export const Chip = (props: PropsWithChildren<{
                     right: -notchWidth / 2,
                     bottom: -notchWidth / 2,
                     borderColor: color,
-                    borderTopWidth: props.disabled ? 0 : theme.thickness,
+                    borderTopWidth: props.disabled ? 0 : theme.scale,
                     transform: [
                         { rotate: "-45deg" }
                     ]
@@ -45,12 +45,12 @@ export const Chip = (props: PropsWithChildren<{
     }
 
     return <View style={{
-        padding: theme.thickness * 5
+        padding: theme.scale * 5
     }}>
         <View style={styles.chipBackgroundContainer}>
             <View style={{
                 ...(drawOutlined ? {
-                    borderWidth: props.disabled ? 0 : theme.thickness,
+                    borderWidth: props.disabled ? 0 : theme.scale,
                     borderColor: color
                 } : undefined),
                 position: "relative",

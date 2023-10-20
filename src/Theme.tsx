@@ -10,7 +10,7 @@ export interface ThemeSettings {
     infoColor: string;
     warnColor: string;
     backgroundColor: string;
-    thickness: number;
+    scale: number;
 }
 
 export const Themes: Record<string, ThemeSettings> = {
@@ -21,11 +21,22 @@ export const Themes: Record<string, ThemeSettings> = {
         infoColor: "#6384e7",
         warnColor: "#e3e78a",
         backgroundColor: "#1B3B5C",
-        thickness: 3
+        scale: 2.75
+    },
+    Dune: {
+        primaryColor: "#d3cb98",
+        dangerColor: "#bd2538",
+        successColor: "#2B8962",
+        infoColor: "#6384e7",
+        warnColor: "#e3e78a",
+        backgroundColor: "#151838",
+        scale: 2.75
     }
 };
 
-export const ThemeContext = createContext<ThemeSettings>(Themes.Slate);
+const DEFAULT_THEME = Themes.Slate;
+
+export const ThemeContext = createContext<ThemeSettings>(DEFAULT_THEME);
 
 export interface ThemeProps extends PropsWithChildren {
     theme?: ThemeSettings;
@@ -40,7 +51,7 @@ export const Theme = (props: ThemeProps) => {
         return null;
     }
 
-    return <ThemeContext.Provider value={props.theme ?? Themes.Slate}>
+    return <ThemeContext.Provider value={props.theme ?? DEFAULT_THEME}>
         {props.children}
     </ThemeContext.Provider>;
 };

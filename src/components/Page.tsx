@@ -12,16 +12,17 @@ export const Page = (props: PropsWithChildren<{
     const theme = useContext(ThemeContext);
     return <View>
         <Box style={{
-            padding: theme.thickness * 5
+            padding: theme.scale * 5,
+            overflow: "hidden"
         }}>{props.children}</Box>
         <View style={{
             display: "flex",
             flexDirection: "row",
-            columnGap: theme.thickness * 4,
+            columnGap: theme.scale * 4,
             flexWrap: "wrap"
         }}>
-            <View style={{flex:1, paddingTop: theme.thickness * 2, minWidth: 200}}>
-                <Text style={{textTransform:"uppercase", fontSize: theme.thickness * 6}}>{props.description}</Text>
+            <View style={{flex:1, paddingTop: theme.scale * 2, minWidth: 200}}>
+                <Text style={{textTransform:"uppercase", fontSize: theme.scale * 6}}>{props.description}</Text>
             </View>
             <Title label={props.title}/>
         </View>

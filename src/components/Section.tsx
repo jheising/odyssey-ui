@@ -8,7 +8,7 @@ export const Section = (props: PropsWithChildren<{
     const theme = useContext(ThemeContext);
     return <View style={{
         flexDirection: props.direction === "horizontal" ? "row" : "column",
-        gap: theme.thickness * 15
+        gap: theme.scale * 15
     }}>
         {props.children}
     </View>;

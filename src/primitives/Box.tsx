@@ -11,7 +11,7 @@ export const Box = (props: ViewProps & {
 
     return <View {...props} style={[{
         borderColor: color,
-        borderWidth: theme.thickness,
-        padding: theme.thickness * 3
+        borderWidth: theme.scale,
+        padding: theme.scale * 3
     }, props.style]} />;
 };

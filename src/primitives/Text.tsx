@@ -23,6 +23,7 @@ export const Text = (props: TextProps & {
 
     return <RNText {...props} style={[{
         fontFamily: "odyssey",
-        color: color
+        color: color,
+        fontSize: theme.scale * 5
     }, props.style]} />;
 };

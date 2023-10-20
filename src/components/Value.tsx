@@ -20,7 +20,7 @@ export const Value = (props: {
             justifyContent: "center",
             alignItems: "center"
         }}>
-            <Text style={{ fontSize: theme.thickness * 10 }} colorVariant={props.colorVariant}>{props.value}</Text>
+            <Text style={{ fontSize: theme.scale * 10 }} colorVariant={props.colorVariant}>{props.value}</Text>
         </View>
     </Field>;
 };

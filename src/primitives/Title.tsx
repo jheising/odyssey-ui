@@ -13,8 +13,8 @@ export const Title = (props: {
         ]
     }}>
         <Text style={{
-            fontSize: theme.thickness * 35,
-            lineHeight: theme.thickness * 30
+            fontSize: theme.scale * 35,
+            lineHeight: theme.scale * 30
         }}>
             {props.label}
         </Text>

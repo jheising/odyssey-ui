@@ -18,20 +18,18 @@ type Story = StoryObj;
 //👇 Throws a type error it the args don't match the component props
 export const Primary: Story = {
     render: () => <Page title="GRV" description="Vita Survival Systems J-Series">
-        <Section direction="horizontal">
-            <Section>
-                <Group title="Current">
-                    <BlinkEntry animationDelay={0}><Value label="Temp" value="22.3°C"/></BlinkEntry>
-                    <BlinkEntry animationDelay={500}><Value label="Hum" value="60%" /></BlinkEntry>
-                    <BlinkEntry animationDelay={1000}><Value label="Grav" value="9.82" /></BlinkEntry>
-                    <Button title="COMMIT"/>
-                </Group>
-                <Group direction="horizontal">
-                    <ProgressBar title="Coolant Flow" fill={100} displayValue="100%" />
-                    <ProgressBar title="Heat Econ" fill={25} displayValue="25%" colorVariant="danger"/>
-                    <ProgressCircle title="PROGRESS" fill={50} displayValue="50" units="%"/>
-                </Group>
-            </Section>
+        <Section>
+            <Group title="Current">
+                <BlinkEntry animationDelay={0}><Value label="Temp" value="22.3°C"/></BlinkEntry>
+                <BlinkEntry animationDelay={500}><Value label="Hum" value="60%" /></BlinkEntry>
+                <BlinkEntry animationDelay={1000}><Value label="Grav" value="9.82" /></BlinkEntry>
+                <Button title="COMMIT"/>
+            </Group>
+            <Group direction="horizontal" alignContent="center">
+                <ProgressBar title="Coolant Flow" fill={100} displayValue="100%" />
+                <ProgressBar title="Heat Econ" fill={25} displayValue="25%" colorVariant="danger"/>
+                <ProgressCircle title="PROGRESS" fill={50} displayValue="50" units="%"/>
+            </Group>
         </Section>
     </Page>
 };
