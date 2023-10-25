@@ -10,8 +10,9 @@ export const Page = (props: PropsWithChildren<{
     description?: string;
 }>) => {
     const theme = useTheme();
-    return <View>
+    return <View style={{flex:1, flexDirection:"column", width:"100%"}}>
         <Box style={{
+            flex:1,
             padding: theme.innerPadding
         }}>{props.children}</Box>
         <View style={{

@@ -19,68 +19,71 @@ export const ProgressCircle = (props: {
     const style = props.style ?? "offset";
     const size = theme.controlMinHeight * 2;
 
-    switch (style) {
-        case "center": {
-            return <Group title={props.title} direction="vertical" titleTextAlign="center">
-                <View style={{ flex: 1, justifyContent: "center", position: "relative" }}>
-                    <AnimatedCircularProgress
-                        size={size}
-                        width={theme.settings.scale * 5}
-                        backgroundWidth={theme.settings.scale * 3}
-                        rotation={0}
-                        fill={props.fill ?? 0}
-                        dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
-                        tintColor={theme.color}
-                        backgroundColor={`${theme.color}22`} />
-                    {props.displayValue &&
-                        <View style={{
-                            position: "absolute",
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column"
-                        }}>
-                            <Text colorVariant={props.colorVariant} style={{
-                                fontSize: theme.settings.scale * 8
-                            }}><AnimatedString value={props.displayValue} /></Text>
-                        </View>}
-                </View>
-            </Group>;
-        }
-        case "offset":
-        default: {
-            return <Group title={props.title} direction="vertical" titleTextAlign="center">
-                <View style={{ flex: 1, justifyContent: "center", position: "relative" }}>
-                    <AnimatedCircularProgress
-                        size={size}
-                        width={theme.settings.scale * 5}
-                        backgroundWidth={theme.settings.scale * 3}
-                        rotation={90}
-                        arcSweepAngle={270}
-                        fill={props.fill ?? 0}
-                        dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
-                        tintColor={theme.color}
-                        backgroundColor={`${theme.color}22`} />
-                    {props.displayValue &&
-                        <View style={{
-                            position: "absolute",
-                            right: 0,
-                            bottom: "50%",
-                            flexDirection: "row",
-                            gap: theme.settings.scale
-                        }}>
-                            <Text colorVariant={props.colorVariant} style={{
-                                fontSize: theme.valueFontSize
+    function renderControl()
+    {
+        switch (style) {
+            case "center": {
+                return <View style={{ flex: 1, justifyContent: "center", position: "relative" }}>
+                        <AnimatedCircularProgress
+                            size={size}
+                            width={theme.settings.scale * 5}
+                            backgroundWidth={theme.settings.scale * 3}
+                            rotation={0}
+                            fill={props.fill ?? 0}
+                            dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
+                            tintColor={theme.color}
+                            backgroundColor={`${theme.color}22`} />
+                        {props.displayValue &&
+                            <View style={{
+                                position: "absolute",
+                                left: 0,
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                flexDirection: "column"
                             }}>
-                                <AnimatedString value={props.displayValue} />
-                            </Text>
-                        </View>}
-                </View>
-            </Group>;
-
+                                <Text colorVariant={props.colorVariant} style={{
+                                    fontSize: theme.settings.scale * 8
+                                }}><AnimatedString value={props.displayValue} /></Text>
+                            </View>}
+                    </View>;
+            }
+            case "offset":
+            default: {
+                return <View style={{ position: "relative" }}>
+                        <AnimatedCircularProgress
+                            size={size}
+                            width={theme.settings.scale * 5}
+                            backgroundWidth={theme.settings.scale * 3}
+                            rotation={90}
+                            arcSweepAngle={270}
+                            fill={props.fill ?? 0}
+                            dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
+                            tintColor={theme.color}
+                            backgroundColor={`${theme.color}22`} />
+                        {props.displayValue &&
+                            <View style={{
+                                position: "absolute",
+                                right: 0,
+                                bottom: "50%",
+                                flexDirection: "row",
+                                gap: theme.settings.scale
+                            }}>
+                                <Text colorVariant={props.colorVariant} style={{
+                                    fontSize: theme.valueFontSize
+                                }}>
+                                    <AnimatedString value={props.displayValue} />
+                                </Text>
+                            </View>}
+                    </View>;
+            }
         }
     }
+
+    return <Group title={props.title} direction="vertical" titleTextAlign="center" style={{ justifyContent: "center", alignItems: "center" }}>
+        {renderControl()}
+    </Group>
+
 };

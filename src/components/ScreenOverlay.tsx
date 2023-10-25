@@ -1,7 +1,6 @@
-import { ImageBackground, ScrollView, StyleSheet, View } from "react-native";
-import { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
+import { ImageBackground, ScrollView, ScrollViewProps, StyleSheet, View } from "react-native";
 
-export const ScreenOverlay = (props: ViewProps) => {
+export const ScreenOverlay = (props: ScrollViewProps) => {
     return <View style={[StyleSheet.absoluteFillObject, {overflow: "hidden"}]}>
         <ScrollView {...props}/>
         <ImageBackground source={require("../../assets/vignette.png")}

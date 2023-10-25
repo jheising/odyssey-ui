@@ -6,7 +6,7 @@ const preview: Preview = {
     decorators: [
         (Story) => (
             <Theme>
-                <ScreenOverlay style={{padding: 10}}>
+                <ScreenOverlay style={{padding: 10, flex:1}} contentContainerStyle={{justifyContent:"center", minHeight:"100%", alignItems:"center"}}>
                     <Story />
                 </ScreenOverlay>
             </Theme>

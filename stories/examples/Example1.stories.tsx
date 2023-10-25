@@ -54,7 +54,7 @@ export const Primary: Story = {
 
         return <Page title="LFE" description="VITA SURVIVAL SYSTEMS J-SERIES">
             <Section style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                <Section style={{ flex: 1, flexBasis: 500 }}>
+                <Section style={{ flex: 1 }}>
                     <Group title="VAR SNS">
                         <BlinkAnimation animationDelay={0}><Value label="TMP" value={{
                             number: values[0],
@@ -85,7 +85,7 @@ export const Primary: Story = {
                         }} />
                     </Group>
                 </Section>
-                <Section style={{ flex: 1, flexBasis: 500 }}>
+                <Section style={{ flex: 1 }}>
                     <Group title="GRV PHS CMT">
                         {/*<Input/>*/}
                         <Switch value={on} onChange={setOn} onTitle="PRG ON" offTitle="PRG OFF" />
@@ -102,20 +102,20 @@ export const Primary: Story = {
                                         { name: "PRB.313" }
                                     ]} value={commitOption} onChange={option => setCommitOption(option)} />
                                 </View>
-                                <Button title="COMMIT" disabled={!commitOption} onPress={() => {
+                                <Button title="COMMIT" disabled={!commitOption} colorVariant="warn" onPress={() => {
                                     setCommittedOption(commitOption);
                                     setCommitOption(undefined);
                                 }} />
                             </View>
-                            {committedOption && <Group title="GRV PRG">
-                                <BlinkAnimation key={committedOption.name} animationDelay={0}><Value label="CGL" value={committedOption?.name} /></BlinkAnimation>
-                                <ProgressCircle title="TNK PRS" style="center" fill={values[5]} displayValue={{
-                                    number: values[5],
-                                    suffix: "%"
-                                }} />
-                            </Group>}
                         </BlinkAnimation>}
                     </Group>
+                    {on && committedOption && <Group title="GRV PRG">
+                        <BlinkAnimation key={committedOption.name} animationDelay={0}><Value label="CGL" value={committedOption?.name} /></BlinkAnimation>
+                        <ProgressCircle title="TNK PRS" style="center" fill={values[5]} displayValue={{
+                            number: values[5],
+                            suffix: "%"
+                        }} />
+                    </Group>}
                 </Section>
             </Section>
         </Page>;

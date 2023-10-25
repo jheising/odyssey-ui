@@ -31,7 +31,7 @@ export const Chip = (props: PropsWithChildren<{
                 borderColor: theme.backgroundColor,
                 borderTopWidth: props.disabled ? 0 : theme.borderWidth,
                 transform: "rotate(-45deg)",
-                zIndex: 10
+                zIndex: 1
             }} />
         </>;
     }
