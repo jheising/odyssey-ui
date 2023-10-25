@@ -1,5 +1,3 @@
-import { getConfigForPWA } from "expo-pwa";
-import { DefinePlugin } from "webpack";
 import { StorybookConfig } from "@storybook/react-webpack5";
 
 const config: StorybookConfig = {
@@ -17,7 +15,6 @@ const config: StorybookConfig = {
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
-        "@storybook/addon-onboarding",
         "@storybook/addon-interactions",
         {
             name: "@storybook/addon-react-native-web",

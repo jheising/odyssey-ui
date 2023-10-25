@@ -1,20 +1,18 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "../Theme";
+import React from "react";
 import { Text } from "./Text";
 import { View } from "react-native";
+import { useTheme } from "../hooks/useTheme";
 
 export const Title = (props: {
-    label: string,
+    label?: string,
 }) => {
-    const theme = useContext(ThemeContext);
+    const theme = useTheme();
     return <View style={{
-        transform: [
-            {scaleY: 0.65}
-        ]
+        transform: "scaleY(0.65)"
     }}>
         <Text style={{
-            fontSize: theme.scale * 35,
-            lineHeight: theme.scale * 30
+            fontSize: theme.titleFontSize,
+            lineHeight: theme.titleFontSize * 0.8
         }}>
             {props.label}
         </Text>

@@ -1,17 +1,20 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { ColorVariant, ThemeContext } from "../Theme";
+import React, { useEffect, useRef } from "react";
+import { ColorVariant } from "../Theme";
 import { Box } from "../primitives/Box";
 import { Animated, View } from "react-native";
 import { Text } from "../primitives/Text";
+import { useTheme } from "../hooks/useTheme";
+import { AnimatedString, NumericDisplayValue } from "../primitives/AnimatedString";
 
 export const ProgressBar = (props: {
     title?: string;
     fill?: number;
-    displayValue?: string;
+    displayValue?: string | number | NumericDisplayValue;
     colorVariant?: ColorVariant;
 }) => {
-    const theme = useContext(ThemeContext);
-    const color = theme[`${props.colorVariant ?? "primary"}Color`];
+    const theme = useTheme({
+        colorVariant: props.colorVariant
+    });
     const levelAnim = useRef(new Animated.Value(0)).current;
     const isLoaded = useRef(false);
 
@@ -51,12 +54,12 @@ export const ProgressBar = (props: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: theme.scale * 2
+        gap: theme.innerPadding
     }}>
-        <Text style={{ textTransform: "uppercase" }} colorVariant={props.colorVariant}>{props.title}</Text>
+        <Text style={{ textTransform: "uppercase" }}>{props.title}</Text>
         <Box style={{
             width: 35,
-            height: theme.scale * 60,
+            height: theme.controlMinHeight * 3,
             padding: 0
         }} colorVariant={props.colorVariant}>
             <Animated.View style={{
@@ -68,9 +71,9 @@ export const ProgressBar = (props: {
                     inputRange: [0, 100],
                     outputRange: ["0%", "100%"]
                 }),
-                backgroundColor: color
+                backgroundColor: theme.color
             }} />
         </Box>
-        {props.displayValue && <Text style={{ textTransform: "uppercase", fontSize: theme.scale * 8 }} colorVariant={props.colorVariant}>{props.displayValue}</Text>}
+        {props.displayValue && <Text style={{ textTransform: "uppercase"}} colorVariant={props.colorVariant}><AnimatedString value={props.displayValue}/></Text>}
     </View>;
 };

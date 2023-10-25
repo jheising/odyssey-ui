@@ -1,17 +1,22 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { ColorVariant, ThemeContext } from "../Theme";
+import React from "react";
+import { ColorVariant } from "../Theme";
 import { Field } from "../primitives/Field";
 import { View } from "react-native";
 import { Text } from "../primitives/Text";
-import { BlinkEntry } from "../primitives/BlinkEntry";
+import { useTheme } from "../hooks/useTheme";
+import { AnimatedString, NumericDisplayValue } from "../primitives/AnimatedString";
 
 export const Value = (props: {
     label: string,
-    value?: string | number;
+    value?: string | number | NumericDisplayValue;
     direction?: "horizontal" | "vertical";
     colorVariant?: ColorVariant;
 }) => {
-    const theme = useContext(ThemeContext);
+
+    const theme = useTheme({
+        colorVariant: props.colorVariant
+    });
+
     return <Field label={props.label} direction={props.direction} colorVariant={props.colorVariant}>
         <View style={{
             width: "100%",
@@ -20,7 +25,9 @@ export const Value = (props: {
             justifyContent: "center",
             alignItems: "center"
         }}>
-            <Text style={{ fontSize: theme.scale * 10 }} colorVariant={props.colorVariant}>{props.value}</Text>
+            <Text style={{ fontSize: theme.valueFontSize }} colorVariant={props.colorVariant}>
+                {props.value && <AnimatedString value={props.value} />}
+            </Text>
         </View>
     </Field>;
 };

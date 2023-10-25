@@ -1,18 +1,20 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { ColorVariant, ThemeContext } from "../Theme";
+import React, { PropsWithChildren } from "react";
+import { ColorVariant } from "../Theme";
 import { Box } from "./Box";
 import { View } from "react-native";
 import { Text } from "./Text";
 import { Group } from "./Group";
+import { useTheme } from "../hooks/useTheme";
 
 export const Field = (props: PropsWithChildren<{
     label?: string;
     direction?: "horizontal" | "vertical";
     colorVariant?: ColorVariant;
 }>) => {
-    const theme = useContext(ThemeContext);
+    const theme = useTheme({
+        colorVariant: props.colorVariant
+    });
     const direction = props.direction ?? "horizontal";
-    const color = theme[`${props.colorVariant ?? "primary"}Color`];
 
     if (direction === "vertical") {
         return <Group title={props.label} titleTextAlign="center">
@@ -20,15 +22,14 @@ export const Field = (props: PropsWithChildren<{
         </Group>;
     }
 
-    return <Box style={{ display: "flex", flexDirection: "row", padding: 0 }} colorVariant={props.colorVariant}>
+    return <Box style={{ display: "flex", flexDirection: "row", padding: 0, minHeight: theme.controlMinHeight }} colorVariant={props.colorVariant}>
         {props.label && <View style={{
-            width: theme.scale * 30,
-            padding: theme.scale,
-            minHeight: theme.scale * 15,
-            backgroundColor: color
+            width: theme.settings.scale * 30,
+            padding: theme.settings.scale,
+            backgroundColor: theme.color
         }}>
             <Text style={{ color: theme.backgroundColor, textTransform: "uppercase" }}>{props.label}</Text>
         </View>}
-        <View style={{ padding: theme.scale * 3, flex: 1 }}>{props.children}</View>
+        <View style={{ padding: theme.innerPadding, flex: 1 }}>{props.children}</View>
     </Box>;
 };

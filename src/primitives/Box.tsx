@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import { View } from "react-native";
-import { ColorVariant, ThemeContext } from "../Theme";
+import { ColorVariant } from "../Theme";
 import { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
+import { useTheme } from "../hooks/useTheme";
 
 export const Box = (props: ViewProps & {
     colorVariant?: ColorVariant;
 }) => {
-    const theme = useContext(ThemeContext);
-    const color = theme[`${props.colorVariant ?? "primary"}Color`];
+    const theme = useTheme({
+        colorVariant: props.colorVariant
+    });
 
     return <View {...props} style={[{
-        borderColor: color,
-        borderWidth: theme.scale,
-        padding: theme.scale * 3
+        borderColor: theme.color,
+        borderWidth: theme.borderWidth,
+        padding: theme.innerPadding
     }, props.style]} />;
 };

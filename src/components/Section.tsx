@@ -1,15 +1,16 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { ThemeContext } from "../Theme";
+import React from "react";
 import { View } from "react-native";
+import { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
+import { useTheme } from "../hooks/useTheme";
 
-export const Section = (props: PropsWithChildren<{
+export const Section = (props: ViewProps & {
     direction?: "horizontal" | "vertical";
-}>) => {
-    const theme = useContext(ThemeContext);
-    return <View style={{
+}) => {
+    const theme = useTheme({});
+    return <View style={[{
         flexDirection: props.direction === "horizontal" ? "row" : "column",
-        gap: theme.scale * 15
-    }}>
+        gap: theme.innerPadding * 3
+    }, props.style]}>
         {props.children}
     </View>;
 };

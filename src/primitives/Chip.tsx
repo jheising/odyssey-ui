@@ -1,64 +1,58 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { View, StyleSheet } from "react-native";
-import { ColorVariant, ThemeContext } from "../Theme";
+import React, { PropsWithChildren } from "react";
+import { View, StyleSheet, ViewStyle } from "react-native";
+import { ColorVariant } from "../Theme";
 import { HatchPattern } from "./HatchPattern";
+import { useTheme } from "../hooks/useTheme";
 
 export const Chip = (props: PropsWithChildren<{
     colorVariant?: ColorVariant;
     outlined?: boolean;
     disabled?: boolean;
+    style?: ViewStyle;
 }>) => {
-    const theme = useContext(ThemeContext);
-    const color = theme[`${props.colorVariant ?? "primary"}Color`];
-    const notchSize = theme.scale * 8;
     const drawOutlined = props.outlined || props.disabled;
+    const theme = useTheme({
+        colorVariant: props.colorVariant,
+        inverted: drawOutlined
+    });
+    const notchSize = theme.settings.scale * 8;
 
     function renderBottomBar() {
-        if (drawOutlined) {
-            const notchWidth = Math.sqrt(Math.pow(notchSize, 2) + Math.pow(notchSize, 2));
-            return <>
-                {props.disabled && <HatchPattern colorVariant={props.colorVariant} />}
-                <View style={{
-                    height: notchWidth,
-                    width: notchWidth,
-                    backgroundColor: theme.backgroundColor,
-                    position: "absolute",
-                    right: -notchWidth / 2,
-                    bottom: -notchWidth / 2,
-                    borderColor: color,
-                    borderTopWidth: props.disabled ? 0 : theme.scale,
-                    transform: [
-                        { rotate: "-45deg" }
-                    ]
-                }} />
-            </>;
-        }
-
-        return <View style={{
-            borderTopColor: color,
-            height: notchSize,
-            borderTopWidth: notchSize,
-            borderRightWidth: notchSize,
-            borderRightColor: "transparent",
-            borderStyle: "solid"
-        }} />;
+        const notchWidth = Math.sqrt(Math.pow(notchSize, 2) + Math.pow(notchSize, 2));
+        return <>
+            {props.disabled && <HatchPattern colorVariant={props.colorVariant} />}
+            <View style={{
+                height: notchWidth,
+                width: notchWidth,
+                backgroundColor: drawOutlined ? theme.color : theme.backgroundColor,
+                position: "absolute",
+                right: -notchWidth / 2,
+                bottom: -notchWidth / 2,
+                borderColor: theme.backgroundColor,
+                borderTopWidth: props.disabled ? 0 : theme.borderWidth,
+                transform: "rotate(-45deg)",
+                zIndex: 10
+            }} />
+        </>;
     }
 
-    return <View style={{
-        padding: theme.scale * 5
-    }}>
-        <View style={styles.chipBackgroundContainer}>
+    return <View style={[{
+        padding: theme.innerPadding,
+        overflow: "hidden"
+    }, props.style]}>
+        <View style={[styles.chipBackgroundContainer]}>
             <View style={{
                 ...(drawOutlined ? {
-                    borderWidth: props.disabled ? 0 : theme.scale,
-                    borderColor: color
+                    borderWidth: props.disabled ? 0 : theme.borderWidth,
+                    borderColor: theme.backgroundColor
                 } : undefined),
                 position: "relative",
-                backgroundColor: drawOutlined ? undefined : color,
+                backgroundColor: drawOutlined ? undefined : theme.color,
                 flex: 1
             }} />
-            {renderBottomBar()}
+
         </View>
+        {renderBottomBar()}
         {props.children}
     </View>;
 };

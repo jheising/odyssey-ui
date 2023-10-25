@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { Animated, Text as RNText } from "react-native";
+import React from "react";
+import { Text as RNText } from "react-native";
 import { TextProps } from "react-native/Libraries/Text/Text";
-import { ColorVariant, ThemeContext } from "../Theme";
+import { ColorVariant } from "../Theme";
 
 // @ts-ignore
-import Gradient from 'react-native-css-gradient';
+import Gradient from "react-native-css-gradient";
+import { useTheme } from "../hooks/useTheme";
 
 export const Text = (props: TextProps & {
     colorVariant?: ColorVariant;
 }) => {
-    const theme = useContext(ThemeContext);
-    const color = theme[`${props.colorVariant ?? "primary"}Color`];
-
-    // const entryAnim = useRef(new Animated.Value(0)).current;
-    // useEffect(() => {
-    //     Animated.timing(entryAnim, {
-    //         toValue: 1,
-    //         duration: 250,
-    //         useNativeDriver: true
-    //     }).start();
-    // }, []);
+    const theme = useTheme({
+        colorVariant: props.colorVariant
+    });
 
     return <RNText {...props} style={[{
         fontFamily: "odyssey",
-        color: color,
-        fontSize: theme.scale * 5
+        color: theme.color,
+        fontSize: theme.fontSize
     }, props.style]} />;
 };

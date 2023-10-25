@@ -5,9 +5,7 @@ export const ScreenOverlay = (props: ViewProps) => {
     return <View style={[StyleSheet.absoluteFillObject, {overflow: "hidden"}]}>
         <ScrollView {...props}/>
         <ImageBackground source={require("../../assets/vignette.png")}
-                         imageStyle={{
-                             resizeMode: "stretch"
-                         }}
+                         resizeMode="stretch"
                          style={[
                              StyleSheet.absoluteFillObject,
                              {
@@ -16,9 +14,7 @@ export const ScreenOverlay = (props: ViewProps) => {
                              }
                          ]} />
         <ImageBackground source={require("../../assets/grid.png")}
-                         imageStyle={{
-                             resizeMode: "repeat"
-                         }}
+                         resizeMode="repeat"
                          style={[
                              StyleSheet.absoluteFillObject,
                              {
