@@ -6,4 +6,5 @@ yarn install
 yarn storybook
 ```
 
-https://github.com/jheising/odyssey-ui/raw/main/media/demo.mov
+https://github.com/jheising/odyssey-ui/assets/346625/6d7f5932-5f86-4987-bf14-14c1a4dfa9af
+
