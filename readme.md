@@ -1,5 +1,6 @@
 # Odyssey UI
-A react-native/react-native web UI for building retro sci-fi user interfaces. A very early work in progress.
+A react-native/react-native web UI for building retro sci-fi user interfaces inspired by Blade Runner and
+2001 Space Odyssey. A very early work in progress.
 
 ```
 yarn install
