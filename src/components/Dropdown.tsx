@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ColorVariant } from "../Theme";
 import { Button } from "./Button";
-import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, TouchableOpacity, View } from "react-native";
+import { Animated, FlatList, LayoutChangeEvent, Modal, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Box } from "../primitives/Box";
 import { BlinkAnimation } from "../primitives/BlinkAnimation";
 import { Text } from "../primitives/Text";
@@ -32,6 +32,8 @@ export const Dropdown = (props: DropdownProps) => {
     const [touchedIndex, setTouchedIndex] = useState(-1);
     const [preSelectedIndex, setPreSelectedIndex] = useState(-1);
     const listViewRef = useRef<FlatList>(null);
+    const mainViewRef = useRef<View>(null);
+    const mainViewPosition = useRef<{ x: number, y: number, w: number, h: number } | undefined>(undefined);
     const optionsToRender = props.options ?? [];
     const optionHeight = theme.settings.scale * OPTION_HEIGHT_MULTIPLIER;
     const expandedHeight = Math.min(optionsToRender.length, MAX_DROPDOWN_DISPLAY) * (optionHeight + theme.settings.scale * 2);
@@ -86,8 +88,11 @@ export const Dropdown = (props: DropdownProps) => {
     }
 
     function toggleOpen() {
-        setPreSelectedIndex(-1);
-        setIsOpen(!isOpen);
+        mainViewRef.current?.measureInWindow((x, y, w, h) => {
+            mainViewPosition.current = { x, y, w, h };
+            setPreSelectedIndex(-1);
+            setIsOpen(!isOpen);
+        });
     }
 
     function handleOptionTouchDown(index: number) {
@@ -114,10 +119,9 @@ export const Dropdown = (props: DropdownProps) => {
     function renderOption(item: ListRenderItemInfo<Option>) {
         const hasPreselection = preSelectedIndex !== -1;
         const isPreSelected = item.index === preSelectedIndex;
-        const isSelected = item.index === touchedIndex || isPreSelected;
 
-        let optionBox = <Box style={{ height: optionHeight, backgroundColor: isSelected ? theme.color : undefined }}>
-            <Text style={{ color: isSelected ? theme.backgroundColor : undefined }}>{item.item.name}</Text>
+        let optionBox = <Box style={{ height: optionHeight, backgroundColor: theme.color }}>
+            <Text style={{ color: theme.backgroundColor }}>{item.item.name}</Text>
         </Box>;
 
         if (isPreSelected) {
@@ -139,52 +143,53 @@ export const Dropdown = (props: DropdownProps) => {
         return optionBox;
     }
 
-    return <View style={{
-        zIndex: 1000
-    }}>
+    function handleCancel() {
+        setIsOpen(false);
+    }
+
+    return <View ref={mainViewRef}>
         <Button title={props.value ? props.value.name : props.placeholderText} colorVariant={props.colorVariant} onPress={toggleOpen} />
-        <View style={{
-            marginBottom: theme.settings.scale * 5
-        }}>
-            <View style={{
-                position: "absolute",
-                backgroundColor: theme.backgroundColor,
-                zIndex: 1000,
-                left: 0,
-                right: theme.settings.scale * 9
-            }}>
-                {isOpen && <FlatList
-                    ref={listViewRef}
-                    data={optionsToRender}
-                    renderItem={renderOption}
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                    onContentSizeChange={handleScrollContentSizeChange}
-                    onScroll={handleScroll}
-                    scrollEventThrottle={250}
-                    style={{
-                        height: isOpen ? expandedHeight : 0,
-                        paddingTop: isOpen ? theme.settings.scale * 2 : 0
-                    }}
-                    contentContainerStyle={{
-                        gap: theme.settings.scale * 2
-                    }} />}
-                <Animated.View style={{
-                    borderTopColor: theme.color,
-                    borderTopWidth: theme.settings.scale,
-                    borderRightColor: "transparent",
-                    borderRightWidth: theme.settings.scale,
-                    marginTop: theme.settings.scale * 2,
-                    opacity: bottomBarAnimValue.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: [1, 0]
-                    }),
-                    transform: bottomBarAnimValue.interpolate({
-                        inputRange: [0, 100],
-                        outputRange: ["translateY(0px)", "translateY(10px)"]
-                    })
-                }} />
-            </View>
-        </View>
+        <Modal visible={isOpen} transparent={true} animationType="none">
+            <TouchableOpacity style={[StyleSheet.absoluteFillObject, {backgroundColor: "#00000055"}]} onPress={handleCancel}>
+                <View style={{
+                    position: "absolute",
+                    top: (mainViewPosition.current?.y ?? 0) + (mainViewPosition.current?.h ?? 0),
+                    left: mainViewPosition.current?.x ?? 0,
+                    width: mainViewPosition.current?.w
+                }}>
+                    <FlatList
+                        ref={listViewRef}
+                        data={optionsToRender}
+                        renderItem={renderOption}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        onContentSizeChange={handleScrollContentSizeChange}
+                        onScroll={handleScroll}
+                        scrollEventThrottle={250}
+                        style={{
+                            height: isOpen ? expandedHeight : 0,
+                            paddingTop: isOpen ? theme.settings.scale * 2 : 0
+                        }}
+                        contentContainerStyle={{
+                            gap: theme.settings.scale * 2
+                        }} />
+                    <Animated.View style={{
+                        borderTopColor: theme.color,
+                        borderTopWidth: theme.settings.scale,
+                        borderRightColor: "transparent",
+                        borderRightWidth: theme.settings.scale,
+                        marginTop: theme.settings.scale * 2,
+                        opacity: bottomBarAnimValue.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: [1, 0]
+                        }),
+                        transform: bottomBarAnimValue.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: ["translateY(0px)", "translateY(10px)"]
+                        })
+                    }} />
+                </View>
+            </TouchableOpacity>
+        </Modal>
     </View>;
 };

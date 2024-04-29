@@ -13,7 +13,6 @@ import { useState } from "react";
 import random from "lodash/random";
 import { useInterval } from "../../src/hooks/useInterval";
 import { View } from "react-native";
-import { Input } from "../../src/components/Input";
 
 const meta: Meta = {
     title: "Example 1"
