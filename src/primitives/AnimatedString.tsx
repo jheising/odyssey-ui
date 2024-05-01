@@ -12,17 +12,10 @@ export interface NumericDisplayValue {
 export const AnimatedString = (props: {
     value: string | number | NumericDisplayValue;
     formatter?: (value: number) => string;
+    animate?: boolean;
 }) => {
 
-    if (isString(props.value)) {
-        return props.value as string;
-    }
-
-    const isNumericDisplayValue = has(props.value, "number");
-    const currentValue = (props.value as NumericDisplayValue).number ?? props.value;
-
-    const decimalPlaces = currentValue.toString().split(".")[1]?.length ?? 0;
-    return <AnimateNumber value={currentValue} timing="easeOut" steps={25} formatter={(value: number) => {
+    function formatValueString(value: number) {
         const formattedString = value.toFixed(decimalPlaces);
         if (props.formatter) {
             return props.formatter(Number(formattedString));
@@ -34,5 +27,15 @@ export const AnimatedString = (props: {
         }
 
         return formattedString;
-    }} />;
+    }
+
+    if (isString(props.value)) {
+        return props.value as string;
+    }
+
+    const isNumericDisplayValue = has(props.value, "number");
+    const currentValue = (props.value as NumericDisplayValue).number ?? props.value;
+
+    const decimalPlaces = currentValue.toString().split(".")[1]?.length ?? 0;
+    return props.animate === false ? formatValueString(currentValue) : <AnimateNumber value={currentValue} timing="easeOut" steps={25} formatter={formatValueString} />;
 };

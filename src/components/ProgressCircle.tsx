@@ -1,10 +1,10 @@
-import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { ColorVariant } from "../Theme";
 import { View } from "react-native";
 import { Group } from "../primitives/Group";
 import { Text } from "../primitives/Text";
 import { useTheme } from "../hooks/useTheme";
 import { AnimatedString, NumericDisplayValue } from "../primitives/AnimatedString";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
 
 export const ProgressCircle = (props: {
     colorVariant?: ColorVariant;
@@ -12,6 +12,7 @@ export const ProgressCircle = (props: {
     fill?: number;
     title?: string;
     displayValue: string | number | NumericDisplayValue;
+    animate?: boolean;
 }) => {
     const theme = useTheme({
         colorVariant: props.colorVariant
@@ -26,11 +27,12 @@ export const ProgressCircle = (props: {
                 return <View style={{ flex: 1, justifyContent: "center", position: "relative" }}>
                         <AnimatedCircularProgress
                             size={size}
+                            duration={props.animate === false ? 0 : undefined}
                             width={theme.settings.scale * 5}
                             backgroundWidth={theme.settings.scale * 3}
                             rotation={0}
                             fill={props.fill ?? 0}
-                            dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
+                            //dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
                             tintColor={theme.color}
                             backgroundColor={`${theme.color}22`} />
                         {props.displayValue &&
@@ -46,7 +48,7 @@ export const ProgressCircle = (props: {
                             }}>
                                 <Text colorVariant={props.colorVariant} style={{
                                     fontSize: theme.settings.scale * 8
-                                }}><AnimatedString value={props.displayValue} /></Text>
+                                }}><AnimatedString value={props.displayValue} animate={props.animate}/></Text>
                             </View>}
                     </View>;
             }
@@ -55,12 +57,13 @@ export const ProgressCircle = (props: {
                 return <View style={{ position: "relative" }}>
                         <AnimatedCircularProgress
                             size={size}
+                            duration={props.animate === false ? 0 : undefined}
                             width={theme.settings.scale * 5}
                             backgroundWidth={theme.settings.scale * 3}
                             rotation={90}
                             arcSweepAngle={270}
                             fill={props.fill ?? 0}
-                            dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
+                            //dashedBackground={{ width: theme.settings.scale * 2, gap: theme.settings.scale * 2 }}
                             tintColor={theme.color}
                             backgroundColor={`${theme.color}22`} />
                         {props.displayValue &&
@@ -74,7 +77,7 @@ export const ProgressCircle = (props: {
                                 <Text colorVariant={props.colorVariant} style={{
                                     fontSize: theme.valueFontSize
                                 }}>
-                                    <AnimatedString value={props.displayValue} />
+                                    <AnimatedString value={props.displayValue} animate={props.animate}/>
                                 </Text>
                             </View>}
                     </View>;

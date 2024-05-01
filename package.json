@@ -1,6 +1,6 @@
 {
   "name": "odyssey-ui",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "author": "Jim Heising <jheising@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
@@ -16,20 +16,21 @@
     "build": "rm -Rf ./dist && tsc --project tsconfig.build.json"
   },
   "dependencies": {
+    "expo-font": ">=11.10.3",
     "react-native-animate-number": "^0.1.2",
     "react-native-circular-progress": "^1.4.0",
-    "react-native-svg": ">=13.14.0",
-    "expo-font": ">=11.10.3"
+    "react-native-svg": ">=13.14.0"
   },
   "peerDependencies": {
     "expo": "~50.0.14",
     "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-native": "0.73.6",
-    "react-native-web": "~0.19.6",
-    "react-dom": "18.2.0"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@storybook/addon-essentials": "^7.4.6",
     "@storybook/addon-interactions": "^7.4.6",
     "@storybook/addon-links": "^7.4.6",
@@ -38,8 +39,13 @@
     "@storybook/react": "^7.4.6",
     "@storybook/react-webpack5": "^7.4.6",
     "@storybook/testing-library": "^0.2.2",
+    "expo": "~50.0.14",
     "expo-pwa": "^0.0.127",
     "prop-types": "^15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.73.6",
+    "react-native-web": "~0.19.6",
     "storybook": "^7.4.6",
     "typescript": "^5.2.2"
   }
